@@ -1,0 +1,1013 @@
+#include "gestionpersonnel.h"
+#include "ui_gestionpersonnel.h"
+#include "employee.h"
+#include "poste.h"
+#include <QDate>
+#include <QIntValidator>
+#include <QMessageBox>
+#include "qmessagebox.h"
+#include <QPdfWriter>
+#include <QDesktopServices>
+#include <QUrl>
+#include <QPainter>
+#include <QLineEdit>
+#include<QtPrintSupport/QPrinter>
+#include<QtPrintSupport/QPrintDialog>
+#include <QDebug>
+#include <QTabWidget>
+#include <QTableWidgetItem>
+#include <QModelIndex>
+#include <string.h>
+//#include <SmtpMime>
+#include <QtNetwork>
+
+#include "arduino_mariem.h"
+//test
+//int player1=0,player2=0,match_id=0;
+
+gestionpersonnel::gestionpersonnel(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::gestionpersonnel)
+{
+
+    ui->setupUi(this);
+    /*QPixmap pix("C:/Users/Yassine/Downloads/tennislogo.png");
+    int w =ui->logo->width();
+    int h=ui->logo->height();
+    ui->logo->setPixmap(pix.scaled(w,h,Qt::KeepAspectRatio));*/
+    this->setStyleSheet("background-color:  white;""selection-background-color: blue;");
+    mysystem = new QSystemTrayIcon(this);
+    mysystem->setVisible(true);
+    //employee
+    ui->id_line->setValidator(new QIntValidator(1,9999999,this));
+    ui->phone_line->setValidator(new QIntValidator(0,9999999,this));
+    ui->id_line_Poste->setValidator(new QIntValidator(0,9999999,this));
+    ui->name_line->setValidator( new QRegExpValidator(QRegExp("[A-Za-z]{1,8}"), this));
+    ui->lastname_line->setValidator( new QRegExpValidator(QRegExp("[A-Za-z]{1,8}"), this));
+    QRegularExpression rx("\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b",QRegularExpression::CaseInsensitiveOption);
+            ui->email_line->setValidator(new QRegularExpressionValidator(rx, this));
+    //      ok=ui->email_line->text().contains(rx);
+    //poste
+    ui->level_line_poste->setValidator(new QIntValidator(0,99,this));
+    ui->employee_nb_line_poste->setValidator(new QIntValidator(0,9999,this));
+    ui->salary_line_poste->setValidator(new QIntValidator(0,99999,this));
+    ui->Title_line_poste_ajouter->setValidator( new QRegExpValidator(QRegExp("[A-Za-z]{1,12}"), this));
+
+
+
+
+    ui->tableView->setModel(E.afficher());
+    ui->tableView_2->setModel(E.afficher());
+    ui->tableView_3->setModel(E.afficher());
+    ui->listView_employee->setModel(E.Stat_employee());
+
+    ui->tableView_4_poste->setModel(P.afficher_postes());
+    ui->tableView_delete_poste->setModel(P.afficher_postes());
+    ui->tableView_mod_poste->setModel(P.afficher_postes());
+    ui->listView_poste->setModel(P.Stat_poste());
+    ui->tableView->setModel(E.trier_anciennete());
+    ui->tableView->setModel(E.trier_id());
+    ui->tableView->setModel(E.trier_age());
+    ui->tableView->setModel(E.rechercher_employee(ui->lineEdit_rechercher_Employee->text()));
+
+    ui->tableView_4_poste->setModel(P.trier_salaire());
+    ui->tableView_4_poste->setModel(P.trier_niveau());
+    ui->tableView_4_poste->setModel(P.trier_nb_employees());
+    ui->tableView_4_poste->setModel(P.rechercher_poste(ui->lineEdit_rechercher_Poste->text()));
+
+    //houni yabdew el warning labels
+    ui->warning_phone->hide();
+    ui->warning_address->hide();
+    ui->warning_id->hide();
+    ui->warning_email->hide();
+    ui->warning_lastname->hide();
+    ui->warning_name->hide();
+    ui->warning_poste->hide();
+
+
+
+    ui->warning_poste_id->hide();
+    ui->warning_poste_emp_number->hide();
+    ui->warning_poste_h_level->hide();
+    ui->warning_poste_salary->hide();
+    ui->warning_poste_title->hide();
+
+
+
+    //houni youfew
+
+    int row=ui->tableView_mod_poste->selectionModel()->currentIndex().row();
+    int id_poste_del =ui->tableView_mod_poste->model()->index(row,0).data().toInt();
+    if(row!=-1)
+    {ui->id_line_poste_2->setText(QString::number(id_poste_del));}
+
+    QCompleter *completerEmp = new QCompleter();
+       completerEmp->setModel(E.recherche_emp_complete());
+       ui->lineEdit_rechercher_Employee->setCompleter(completerEmp);
+
+  //chart
+
+
+
+    //Arduino
+  /*  int ret=A.connect_arduino();
+    switch (ret) {
+    case(0):qDebug()<<"arduino is available and connected to:"<<A.get_arduino_port_name();
+        break;
+     case(1):qDebug()<<"arduino is available but not connected to:"<<A.get_arduino_port_name();
+        break;
+    case(-1):qDebug()<<"arduino is not avalaible";
+    }
+    QObject::connect(A.get_serial(),SIGNAL(readyRead()),this,SLOT(update_label()));
+
+*/
+}
+
+gestionpersonnel::~gestionpersonnel()
+{
+    delete ui;
+}
+/*
+void MainWindow::update_label()
+{
+    data=A.read_from_arduino();
+    if (data=="1")
+{       player1++;
+        QString player1_string =QString::number(player1);
+
+        ui->Score_player_1->setText(player1_string);
+    }
+    else if (data=="2")
+    {
+        {       player2++;
+                QString player2_string =QString::number(player2);
+
+                ui->score_player2->setText(player2_string);
+            }
+    }
+
+}
+*/
+
+
+
+void gestionpersonnel::on_ajouter_button_clicked()
+{      QString testing="";
+       int id=ui->id_line->text().toInt();
+       QString lastname =ui->lastname_line->text();
+       QString name =ui->name_line->text();
+       QString email =ui->email_line->text();
+       int phone=ui->phone_line->text().toInt();
+       QString address=ui->address_line->text();
+       QDate birthdate =ui->birthdate_line->date();
+       QDate entrydate =ui->entrydate_line->date();
+       QString poste =ui->poste_line_2->text();
+       Employee E(id,lastname,name,email,phone,address,birthdate,entrydate,poste) ;
+
+
+        testing=E.ajouter();
+       if (testing=="")
+       {
+               mysystem->show();
+               mysystem->showMessage(tr("notification"),tr("Ajout effectué avec succés"));
+
+               ui->tableView->setModel(E.afficher());
+               ui->tableView_2->setModel(E.afficher());
+               ui->tableView_3->setModel(E.afficher());
+               ui->employee->setCurrentWidget(ui->tab_afficher_employees);
+               //warning_labels
+               ui->warning_address->clear();
+               ui->warning_email->clear();
+               ui->warning_id->clear();
+               ui->warning_lastname->clear();
+               ui->warning_name->clear();
+               ui->warning_phone->clear();
+               ui->warning_poste->clear();
+               //clear the edit lines
+               ui->id_line->clear();
+               ui->lastname_line->clear();
+               ui->name_line->clear();
+               ui->email_line->clear();
+               ui->phone_line->clear();
+               ui->address_line->clear();
+               ui->birthdate_line->clear();
+               ui->entrydate_line->clear();
+               ui->poste_line_2->clear();
+
+
+
+       }
+      else{
+           ui->warning_phone->hide();
+           ui->warning_address->hide();
+           ui->warning_id->hide();
+           ui->warning_email->hide();
+           ui->warning_lastname->hide();
+           ui->warning_name->hide();
+           ui->warning_poste->hide();
+
+
+               for(int i=0;i<testing.length();i++){
+                   if (testing[i]=="6")
+               {        ui->warning_phone->setText(tr("Phone is Missing"));
+                       ui->warning_phone->show();
+                   }
+
+                  if (testing[i]=="5")
+                 { ui->warning_address->setText(tr("Address is Missing"));
+                      ui->warning_address->show();
+                  }
+                    if (testing[i]=="2")
+                   { ui->warning_id->setText(tr("ID is Missing"));
+                        ui->warning_id->show();
+                    }
+                    if (testing[i]=="3")
+                   { ui->warning_lastname->setText(tr("Lastname is Missing"));
+                        ui->warning_lastname->show();
+                    }
+                    if (testing[i]=="9")
+                   { ui->warning_poste->setText(tr("Title is Missing"));
+                        ui->warning_poste->show();
+                    }
+                    if (testing[i]=="4")
+                   { ui->warning_name->setText(tr("Name is Missing"));
+                        ui->warning_name->show();
+                    }
+
+                    if (testing[i]=="7")
+                   { ui->warning_phone->setText(tr("Phone Number not valid "));
+                        ui->warning_phone->show();
+                    }
+                    if (testing[i]=="8")
+                   { ui->warning_email->setText(tr("Email should contain @ . format"));
+                        ui->warning_email->show();
+                    }
+            }
+
+
+
+
+
+
+
+}
+
+
+}
+
+void gestionpersonnel::on_modifier_button_clicked()
+{
+
+
+
+    int row=ui->tableView_2->selectionModel()->currentIndex().row();
+    int id =ui->tableView_2->model()->index(row,0).data().toInt();
+    QString lastname=ui->tableView_2->model()->index(row,1).data().toString();
+    QString name=ui->tableView_2->model()->index(row,2).data().toString();
+    QString email=ui->tableView_2->model()->index(row,3).data().toString();
+    int phone =ui->tableView_2->model()->index(row,4).data().toInt();
+    QString address=ui->tableView_2->model()->index(row,5).data().toString();
+    QDate birthdate=ui->tableView_2->model()->index(row,6).data().toDate();
+    QDate entrydate=ui->tableView_2->model()->index(row,7).data().toDate();
+    QString poste=ui->tableView_2->model()->index(row,8).data().toString();
+
+    if(row==-1)
+    {
+        QMessageBox ::critical(nullptr,QObject::tr("modifier un service"),
+                                          QObject::tr("aucune selection.\n"
+                                              "click ok to exit"),QMessageBox::Ok);
+
+    }
+    else
+    {
+    ui->id_line_2->setText( QString::number(id));
+    ui->lastname_line_2->setText(lastname);
+    ui->name_line_2->setText(name);
+    ui->email_line_2->setText(email);
+    ui->phone_line_2->setText(QString::number(phone));
+    ui->address_line_3->setText(address);
+    ui->birthdate_line_3->setDate(birthdate);
+    ui->entrydate_line_3->setDate(entrydate);
+    ui->poste_line_edit->setText(poste);
+}
+}
+
+
+void gestionpersonnel::on_modifier_button_2_clicked()
+{
+      int row=ui->tableView_mod_poste->selectionModel()->currentIndex().row();
+      int id_poste =ui->tableView_mod_poste->model()->index(row,0).data().toInt();
+      QString title_poste=ui->tableView_mod_poste->model()->index(row,1).data().toString();
+      int salary =ui->tableView_mod_poste->model()->index(row,2).data().toInt();
+      int hierarchical_level =ui->tableView_mod_poste->model()->index(row,3).data().toInt();
+      int employee_number =ui->tableView_mod_poste->model()->index(row,4).data().toInt();
+
+      if(row==-1)
+      {
+          QMessageBox ::critical(nullptr,QObject::tr("modifier un service"),
+                                            QObject::tr("aucune selection.\n"
+                                                "click ok to exit"),QMessageBox::Ok);
+      }
+      else
+      {
+          ui->id_line_poste_2->setText(QString::number(id_poste));
+          ui->title_line_poste_2->setText(title_poste);
+          ui->salary_line_poste_2->setText(QString::number(salary));
+          ui->level_line_poste_2->setText(QString::number(hierarchical_level));
+          ui->employee_nb_line_poste_2->setText(QString::number(employee_number));
+
+}
+}
+
+void gestionpersonnel::on_validerMod_button_clicked()
+{
+    int id=ui->id_line_2->text().toInt();
+    QString lastname =ui->lastname_line_2->text();
+    QString name =ui->name_line_2->text();
+    QString email =ui->email_line_2->text();
+    int phone=ui->phone_line_2->text().toInt();
+    QString address=ui->address_line_3->text();
+    QDate birthdate =ui->birthdate_line_3->date();
+    QDate entrydate =ui->entrydate_line_3->date();
+    QString poste =ui->poste_line_edit->text();
+    Employee E(id,lastname,name,email,phone,address,birthdate,entrydate,poste) ;
+
+    bool test=E.modifier_employee();
+
+     if (test)
+     {
+         QMessageBox::information(nullptr, QObject::tr("ok"),QObject::tr("modification effectué.\n click OK to exit."),QMessageBox::Ok);
+
+         ui->tableView->setModel(E.afficher());
+         ui->tableView_2->setModel(E.afficher());
+         ui->tableView_3->setModel(E.afficher());
+     }
+     else
+        {
+         QMessageBox::critical(nullptr, QObject::tr("Not ok"),QObject::tr("Ajout non effectué.\n click cancel to exit."),QMessageBox::Cancel);
+
+}
+}
+void gestionpersonnel::on_validerMod_button_poste_clicked()
+{
+int id_poste=ui->id_line_poste_2->text().toInt();
+QString title_poste =ui->title_line_poste_2->text();
+int salary_poste=ui->salary_line_poste_2->text().toInt();
+int hierarchical_level=ui->level_line_poste_2->text().toInt();
+int employee_number=ui->employee_nb_line_poste_2->text().toInt();
+
+Poste P( id_poste , title_poste, salary_poste, hierarchical_level, employee_number);
+
+bool test=P.modifier_poste();
+
+ if (test)
+ {
+     QMessageBox::information(nullptr, QObject::tr("ok"),QObject::tr("Modification effectuée.\n click OK to exit."),QMessageBox::Ok);
+
+     ui->tableView_4_poste->setModel(P.afficher_postes());
+     ui->tableView_delete_poste->setModel(P.afficher_postes());
+     ui->tableView_mod_poste->setModel(P.afficher_postes());
+    // ui->listView_poste->setModel(P.Stat_poste());
+
+ }
+ else
+    {
+     QMessageBox::critical(nullptr, QObject::tr("Not ok"),QObject::tr("Modification non effectuée.\n click cancel to exit."),QMessageBox::Cancel);
+
+}
+
+}
+
+
+
+void gestionpersonnel::on_supprimer_button_clicked()
+{
+Employee E1;
+E1.setid(ui->id_delete_line->text().toInt());
+bool test=E1.supprimer(E1.getid());
+
+
+if (test)
+  {
+    QMessageBox::information(nullptr, QObject::tr("ok"),QObject::tr("Suppression effectuée.\n click OK to exit."),QMessageBox::Ok);
+
+    ui->tableView->setModel(E.afficher());
+    ui->tableView_2->setModel(E.afficher());
+    ui->tableView_3->setModel(E.afficher());
+    ui->listView_employee->setModel(E.Stat_employee());
+
+}
+else
+   {
+    QMessageBox::critical(nullptr, QObject::tr("Not ok"),QObject::tr("Suppression non effectuée.\n click cancel to exit."),QMessageBox::Cancel);
+
+    }
+}
+
+
+
+
+void gestionpersonnel::on_ajouter_button_poste_clicked()
+{
+    int id_poste=ui->id_line_Poste->text().toInt();
+    QString title_poste =ui->Title_line_poste_ajouter->text();
+    int salary =ui->salary_line_poste->text().toInt();
+    int hierarchical_level=ui->level_line_poste->text().toInt();
+    int employee_number=ui->employee_nb_line_poste->text().toInt();
+
+
+    Poste P( id_poste , title_poste, salary, hierarchical_level, employee_number);
+    QString testing="";
+     testing=P.ajouter_poste();
+
+     if (testing=="")
+           {
+                   mysystem->show();
+                   mysystem->showMessage(tr("notification"),tr("Ajout effectué avec succés"));
+
+                   ui->tableView_4_poste->setModel(P.afficher_postes());
+                   ui->tableView_delete_poste->setModel(P.afficher_postes());
+                   ui->tableView_mod_poste->setModel(P.afficher_postes());
+                   ui->listView_poste->setModel(P.Stat_poste());
+                   ui->tab_ajouter_poste->setCurrentWidget(ui->tab_afficher_poste);
+
+
+            //warning_labels
+
+                   ui->warning_poste_id->clear();
+                   ui->warning_poste_emp_number->clear();
+                   ui->warning_poste_h_level->clear();
+                   ui->warning_poste_salary->clear();
+                   ui->warning_poste_title->clear();
+
+
+            //clear the edit lines
+                   ui->id_line_Poste->clear();
+                   ui->salary_line_poste->clear();
+                   ui->level_line_poste->clear();
+                   ui->Title_line_poste_ajouter->clear();
+                   ui->employee_nb_line_poste->clear();
+
+
+           }
+          else{
+         ui->warning_poste_id->hide();
+         ui->warning_poste_emp_number->hide();
+         ui->warning_poste_h_level->hide();
+         ui->warning_poste_salary->hide();
+         ui->warning_poste_title->hide();
+
+
+                   for(int i=0;i<testing.length();i++){
+
+
+
+                        if (testing[i]=="2")
+                       { ui->warning_poste_id->setText(tr("ID is Missing"));
+                            ui->warning_poste_id->show();
+                        }
+
+
+                        if (testing[i]=="3")
+                       { ui->warning_poste_h_level->setText(tr("Hierarchical level is Missing"));
+                            ui->warning_poste_h_level->show();
+                        }
+
+               if (testing[i]=="4")
+                       { ui->warning_poste_salary->setText(tr("Salary is Missing"));
+                            ui->warning_poste_salary->show();
+                        }
+
+                      if (testing[i]=="5")
+                      { ui->warning_poste_title->setText(tr("Title is Missing"));
+                          ui->warning_poste_title->show();
+                      }
+
+                        if (testing[i]=="6")
+                       {      ui->warning_poste_emp_number->setText(tr("Employee Number is Missing"));
+                           ui->warning_poste_emp_number->show();
+                       }
+
+                }
+
+        }
+    }
+
+
+
+
+     /*if (test)
+     {
+         QMessageBox::information(nullptr, QObject::tr("ok"),QObject::tr("Ajout effectué.\n click OK to exit."),QMessageBox::Ok);
+
+         ui->tableView_4_poste->setModel(P.afficher_postes());
+         ui->tableView_delete_poste->setModel(P.afficher_postes());
+         ui->tableView_mod_poste->setModel(P.afficher_postes());
+         ui->listView_poste->setModel(P.Stat_poste());
+
+     }
+     else
+        {
+         QMessageBox::critical(nullptr, QObject::tr("Not ok"),QObject::tr("Ajout non effectué.\n click cancel to exit."),QMessageBox::Cancel);
+
+}*/
+
+
+
+void gestionpersonnel::on_supprimer_button_poste_clicked()
+{
+    Poste P1;
+    P1.setid_poste(ui->id_delete_line_poste->text().toInt());
+    bool test=P1.supprimer_poste(P1.getid_poste());
+
+
+    if (test)
+      {
+        QMessageBox::information(nullptr, QObject::tr("ok"),QObject::tr("Suppression effectuée.\n click OK to exit."),QMessageBox::Ok);
+
+        ui->tableView_4_poste->setModel(P.afficher_postes());
+        ui->tableView_delete_poste->setModel(P.afficher_postes());
+        ui->tableView_mod_poste->setModel(P.afficher_postes());
+        ui->listView_poste->setModel(P.Stat_poste());
+
+    }
+    else
+       {
+        QMessageBox::critical(nullptr, QObject::tr("Not ok"),QObject::tr("Suppression non effectuée.\n click cancel to exit."),QMessageBox::Cancel);
+
+        }
+}
+
+void gestionpersonnel::on_pushButton_clicked()
+{
+ Poste P2;
+ ui->listView_poste->setModel(P2.Stat_poste());
+
+}
+
+void gestionpersonnel::on_stat_employee_button_clicked()
+{
+    Employee E2;
+    ui->listView_employee->setModel(E2.Stat_employee());
+
+}
+
+void gestionpersonnel::on_radioButton_ancien_employee_clicked()
+{
+    ui->tableView->setModel(E.trier_anciennete());
+}
+
+void gestionpersonnel::on_radioButton_id_employee_clicked()
+{
+    ui->tableView->setModel(E.trier_id());
+
+}
+
+void gestionpersonnel::on_radioButton_age_employee_clicked()
+{
+    ui->tableView->setModel(E.trier_age());
+
+}
+
+void gestionpersonnel::on_radioButton_niveau_poste_clicked()
+{
+    ui->tableView_4_poste->setModel(P.trier_niveau());
+
+}
+
+void gestionpersonnel::on_radioButton_salary_poste_clicked()
+{
+    ui->tableView_4_poste->setModel(P.trier_salaire());
+
+}
+
+void gestionpersonnel::on_radioButton_nb_poste_clicked()
+{
+    ui->tableView_4_poste->setModel(P.trier_nb_employees());
+
+}
+
+
+void gestionpersonnel::on_pushButton_rechercherEmployee_clicked()
+{
+   /* QStringList wordList;
+
+        qry.exec("SELECT id,lastname,name FROM commandes");
+        while(qry.next()){
+        wordList.push_back(qry.value(0).toString());
+        wordList.push_back(qry.value(1).toString());
+        wordList.push_back(qry.value(2).toString());
+        }
+        qDebug()<<wordList;
+        QCompleter *completer = new QCompleter(wordList, this);
+        completer->setCaseSensitivity(Qt::CaseInsensitive);
+        ui->lineEdit_rechercher_Employee->setCompleter(completer);
+*/
+    if(ui->lineEdit_rechercher_Employee->text() == "")
+        {
+            ui->tableView->setModel(E.afficher());
+        }
+    else
+        {
+             ui->tableView->setModel(E.rechercher_employee(ui->lineEdit_rechercher_Employee->text()));
+        }
+
+}
+
+void gestionpersonnel::on_radioButton_employee_retour_clicked()
+{
+    ui->tableView->setModel(E.afficher());
+
+}
+
+void gestionpersonnel::on_pushButton_recherche_poste_clicked()
+{
+    if(ui->lineEdit_rechercher_Poste->text() == "")
+        {
+            ui->tableView_4_poste->setModel(P.afficher_postes());
+        }
+    else
+        {
+             ui->tableView_4_poste->setModel(P.rechercher_poste(ui->lineEdit_rechercher_Poste->text()));
+        }
+}
+
+void gestionpersonnel::on_radioButton_poste_retour_clicked()
+{
+    ui->tableView_4_poste->setModel(P.afficher_postes());
+}
+
+
+void gestionpersonnel::on_ficher_paie_button_clicked()
+{   Employee E;
+    QString id= ui->att_id->text();
+    QString employee_name=ui->line_esm->text();
+    QString address=ui->attestation_address->text();
+    QString title=ui->attestation_title->text();
+    QString Birthdate=ui->attestation_birtdate->text();
+    QString date=ui->line_date->text();
+    QString lieu=ui->line_lieu->text();
+
+
+    QString location_beginning="C://Users//Yassine//Desktop//fichiervalidation3/list";
+    QString extension = ".pdf";
+    QString file_name=location_beginning+employee_name+extension;
+
+    QString first_line="Je, soussigné "+employee_name+" agissant en qualité d'assiduité de la société Racqueteers dont le siège ";
+    QString second_line="social se situe au "+address+ " et immatriculée au RCS de  Tunis sous le numéro  "+id+".";
+    QString third_line="Déclare et certifie que "+title+" " +employee_name+" né(e) le "+Birthdate+" a exercé dans la société  en contrat ";
+   QString another_line=title+" "+employee_name+ " nous quitte libre de tout engagement.";
+   QString couverture_line= "[Le cas échéant ] :Mr/Mme "+employee_name+ " bénéficie du maintien de sa couverture santé et de ses garanties ";
+
+    QPdfWriter pdf(file_name);
+    QPainter painter(&pdf);
+    painter.setPen(Qt::red);
+    painter.setFont(QFont("arial",30));
+    painter.drawText(2500,1200," Certificat d'Emploi ");
+
+    painter.setPen(Qt::black);
+    painter.setFont(QFont("arial",10));
+    painter.drawText(1000,3000,first_line);
+    painter.drawText(1000,3300,second_line);
+    painter.drawText(1000,3600,third_line);
+    painter.drawText(1000,3900,"à durée indéterminée comme suit :");
+    painter.drawText(1500,4500,"⦁	Du [date] au [date] en qualité de [Emploi 1]");
+    painter.drawText(1000,5600,couverture_line);
+    painter.drawText(1000,5900,"de prévoyance pendant toute toute sa période de chômage.");
+    painter.drawText(1000,6500,another_line);
+    painter.drawText(1000,7500,"Pour faire valoir ce que de droit");
+    painter.drawText(6500,8000,"    Fait à "+lieu+ "le "+date);
+    painter.drawText(6500,8500,"   [Qualité et signature]");
+
+    painter.end();
+    QMessageBox::information(nullptr, QObject::tr("ok"),QObject::tr("fiche de paie exécutée."),QMessageBox::Ok);
+}
+
+
+
+void gestionpersonnel::on_editline_print_clicked()
+{
+    QPrinter printer;
+     printer.setPrinterName("mariem");
+     QPrintDialog dialog(&printer, this);
+     if (dialog.exec() == QDialog::Rejected) return;
+     ui->tableView->render(&printer);
+
+}
+
+
+/*
+void MainWindow::on_game_over_clicked()
+{
+    match_id++;
+    QString first_player_name=ui->player_name_1_edit->text();
+    int first_player_score=ui->Score_player_1->text().toInt();
+    QString second_player_name=ui->player_name_2_edit->text();
+    int second_player_score=ui->score_player2->text().toInt();
+    Match M(match_id,first_player_name,first_player_score,second_player_name,second_player_score);
+    bool test=M.ajouter_match();
+
+    if (test)
+    {
+        QMessageBox::information(nullptr, QObject::tr("ok"),QObject::tr("Ajout effectué.\n click OK to exit."),QMessageBox::Ok);
+    }
+    else
+       {
+        QMessageBox::critical(nullptr, QObject::tr("Not ok"),QObject::tr("Ajout non effectué.\n click cancel to exit."),QMessageBox::Cancel);
+       }
+ }
+*/
+
+void gestionpersonnel::on_french_clicked()
+{
+    if(ui->french->isChecked())
+    {
+
+        ui->Sort_emp_number_poste_label->setText(tr("Nombre D'employés"));
+        ui->sort_age_label->setText(tr("Age"));
+        ui->sort_id_label->setText(tr("Identifiant"));
+        ui->sort_label->setText(tr("Trier Selon:"));
+        ui->sort_level_poste->setText(tr("Niveau Hiérarchique"));
+        ui->sort_salary_label_poste->setText(tr("Salaire"));
+        ui->sort_poste_label->setText(tr("Trier Selon:"));
+        ui->att_adress_label->setText(tr("Adresse"));
+        ui->att_birthdate_label->setText(tr("Date de Naissance"));
+        ui->att_date_label->setText(tr("Date"));
+        ui->att_id_label->setText(tr("Identifiant"));
+        ui->att_name_label->setText(tr("Nom"));
+        ui->att_title_label->setText(tr("Titre"));
+        ui->att_lieu_label->setText(tr("Location"));
+        ui->adress_label->setText(tr("Adresse"));
+        ui->att_lieu_label->setText(tr("Lieu"));
+        ui->id_poste_label->setText(tr("Identifiant"));
+        ui->title_poste_label->setText(tr("Titre"));
+        ui->salary_poste_label->setText(tr("Salaire"));
+        ui->level_poste_label->setText(tr("Niveau hiérarchique"));
+        ui->emp_numb_label->setText(tr("Nombre d'employés"));
+        ui->adress_upd_label ->setText(tr("Adresse"));
+        ui->birthdate_upd_1 ->setText(tr("Date de"));
+        ui->birthdate_upd_2 ->setText(tr("Naissance"));
+        ui->email_upd_label ->setText(tr("Email"));
+        ui->empnumb_upd_1label ->setText(tr("Nombre"));
+        ui->empnumb_upd_2label ->setText(tr("D'employés"));
+        ui->entrydate_upd_label ->setText(tr("Date d'entrée"));
+        ui->id_upd_label ->setText(tr("Identifiant"));
+        ui->id_upd_poste ->setText(tr("Identifiant"));
+        ui->lasname_upd_label ->setText(tr("Nom"));
+        ui->level_upd_1label ->setText(tr("Niveau"));
+        ui->level_upd_poste ->setText(tr("Hiérarchique"));
+        ui->name_upd_label ->setText(tr("Prénom"));
+        ui->phone_upd_label ->setText(tr("Téléphone"));
+        ui->poste_upd_label ->setText(tr("Poste"));
+        ui->salary_upd_poste_label ->setText(tr("Salaire"));
+        ui->title_upd_poste ->setText(tr("Titre"));
+
+        ui->emp_id->setText(tr("Identifiant"));
+        ui->emp_lastname_label->setText(tr("Nom"));
+        ui->emp_name_label->setText(tr("Prénom"));
+        ui->emp_numb_label->setText(tr("Nombre D'employés"));
+        ui->phone_label->setText(tr("téléphone"));
+        ui->adress_label ->setText(tr("Adresse"));
+        ui->email_label->setText(tr("Email"));
+        ui->entrydate_label->setText(tr("Date d'entrée"));
+        ui->birthdate_1_label->setText(tr("Date de"));
+        ui->birthdate_2_label  ->setText(tr("Naissance"));
+
+        ui->ajouter_button  ->setText(tr("Ajouter"));
+        ui->ajouter_button_poste  ->setText(tr("Ajouter"));
+        ui->att_id  ->setText(tr(""));
+        ui->ficher_paie_button  ->setText(tr("Générer Attestation d'emploi"));
+        ui->modifier_button  ->setText(tr("Modifier"));
+        ui->modifier_button_2  ->setText(tr("Modifier"));
+        ui->pushButton_recherche_poste  ->setText(tr("Rechercher"));
+        ui->pushButton_rechercherEmployee  ->setText(tr("Rechercher"));
+        ui->stat_employee_button  ->setText(tr("Nombre D'employés"));
+        ui-> supprimer_button ->setText(tr("Supprimer"));
+        ui->supprimer_button_poste  ->setText(tr("Supprimer"));
+        ui->validerMod_button  ->setText(tr("Valider Modification"));
+        ui->validerMod_button_poste  ->setText(tr("Valider Modification"));
+       ui-> stat_poste ->setText(tr("Nombre de Postes"));
+        ui->editline_print  ->setText(tr("Imprimer"));
+        ui->game_over  ->setText(tr("Terminer Match"));
+        ui->experience_label ->setText(tr("Ancienneté"));
+        ui->radioButton_employee_retour ->setText(tr("Retour à la Liste"));
+        ui->real_stat_emp_button->setText(tr("Statistiques sur les employés"));
+        ui->email_address_label->setText(tr("Adresse Email du destinataire"));
+        ui->email_content_label->setText(tr("Contenu "));
+        ui->email_object_label->setText(tr("Objet"));
+        ui->google_search_button->setText(tr("Rechercher sur Google"));
+
+
+    }
+
+}
+
+void gestionpersonnel::on_english_clicked()
+{
+    if(ui->english->isChecked()){
+
+        ui->Sort_emp_number_poste_label->setText(tr("Employee Number"));
+        ui->sort_age_label->setText(tr("Age"));
+        ui->sort_id_label->setText(tr("Identifier"));
+        ui->sort_label->setText(tr("Sort By:"));
+        ui->sort_level_poste->setText(tr("Hierarchy Level"));
+        ui->sort_salary_label_poste->setText(tr("Salary"));
+        ui->sort_poste_label->setText(tr("Sort By:"));
+        ui->att_adress_label->setText(tr("Address"));
+        ui->att_birthdate_label->setText(tr("Birthdate"));
+        ui->att_date_label->setText(tr("Date"));
+        ui->att_id_label->setText(tr("Indentifier"));
+        ui->att_name_label->setText(tr("Name"));
+        ui->att_title_label->setText(tr("Title"));
+        ui->adress_label->setText(tr("Address"));
+
+        ui->id_poste_label->setText(tr("Identifier"));
+        ui->title_poste_label->setText(tr("Title"));
+        ui->salary_poste_label->setText(tr("Salary"));
+        ui->level_poste_label->setText(tr("Hierarchical Level"));
+        ui->emp_numb_label->setText(tr("Employee Number"));
+        ui->adress_upd_label ->setText(tr("Address"));
+        ui->birthdate_upd_1 ->setText(tr("Birthdate"));
+        ui->birthdate_upd_2 ->setText(tr(""));
+        ui->email_upd_label ->setText(tr("Email"));
+        ui->empnumb_upd_1label ->setText(tr("Employee"));
+        ui->empnumb_upd_2label ->setText(tr("Number"));
+        ui->entrydate_upd_label ->setText(tr("Entry Date"));
+        ui->id_upd_label ->setText(tr("Identifier"));
+        ui->id_upd_poste ->setText(tr("Identifier"));
+        ui->lasname_upd_label ->setText(tr("Lastname"));
+        ui->level_upd_1label ->setText(tr("Hierarchical"));
+        ui->level_upd_poste ->setText(tr("Level"));
+        ui->name_upd_label ->setText(tr("Name"));
+        ui->phone_upd_label ->setText(tr("Phone"));
+        ui->poste_upd_label ->setText(tr("Title"));
+        ui->salary_upd_poste_label ->setText(tr("Salary"));
+        ui->title_upd_poste ->setText(tr("Title"));
+
+        ui->id_delete_poste_label ->setText(tr("Identifier"));
+        ui->radioButton_poste_retour ->setText(tr("Back to List"));
+        ui->experience_label ->setText(tr("Seniority"));
+        ui->radioButton_employee_retour ->setText(tr("Back to List"));
+        ui->delete_id_label ->setText(tr("Identifier"));
+
+
+        ui->emp_id->setText(tr("Identifier"));
+        ui->emp_lastname_label->setText(tr("Lastname"));
+        ui->emp_name_label->setText(tr("Name"));
+        ui->emp_numb_label->setText(tr("Employee Number"));
+        ui->phone_label->setText(tr("Phone"));
+        ui->adress_label ->setText(tr("Address"));
+        ui->email_label->setText(tr("Email"));
+        ui->entrydate_label->setText(tr("Entry Date"));
+        ui->birthdate_1_label->setText(tr("Date of"));
+        ui->birthdate_2_label  ->setText(tr("Birth"));
+
+        ui->ajouter_button  ->setText(tr("Add"));
+        ui->ajouter_button_poste  ->setText(tr("Add"));
+        ui->att_id  ->setText(tr(""));
+        ui->ficher_paie_button  ->setText(tr("Generate Certificate of Employment"));
+        ui->modifier_button  ->setText(tr("Edit"));
+        ui->modifier_button_2  ->setText(tr("Edit"));
+        ui->pushButton_recherche_poste  ->setText(tr("Search"));
+        ui->pushButton_rechercherEmployee  ->setText(tr("Search"));
+        ui->stat_employee_button  ->setText(tr("Employee Number"));
+        ui-> supprimer_button ->setText(tr("Delete"));
+        ui->supprimer_button_poste  ->setText(tr("Delete"));
+        ui->validerMod_button  ->setText(tr("Validate Modification"));
+        ui->validerMod_button_poste  ->setText(tr("Validate Modification"));
+        ui-> stat_poste ->setText(tr("Number of Jobs"));
+        ui->editline_print  ->setText(tr("Print"));
+        ui->game_over  ->setText(tr("Finish Game"));
+        ui->player1_score_label->setText(tr("Player 1 Score"));
+        ui->player1_name_label->setText(tr("Player 1 Name"));
+        ui->player2_name_label->setText(tr("Player 2 Name"));
+        ui->player2_score_label->setText(tr("Player 2 Score"));
+        ui->real_stat_emp_button->setText(tr("Employee statistics"));
+        ui->email_address_label->setText(tr("Email Address"));
+        ui->email_content_label->setText(tr("Email Content"));
+        ui->email_object_label->setText(tr("Subject"));
+        ui->google_search_button->setText(tr("Search on Google"));
+
+
+}
+}
+
+
+void gestionpersonnel::on_real_stat_emp_button_clicked()
+{   //ui->employee->setCurrentWidget(ui->statistiques);
+
+    int ouv;
+    int stag;
+    int instruc;
+    int emp_bur;
+    int total;
+    QString ouvrier;
+    QString stagiaire;
+    QString instructor ;
+    QString emp_bureau;
+
+
+     QSqlQuery q;
+
+    q.prepare("SELECT COUNT(id) FROM employee where poste='ouvrier' ");
+    q.exec();
+    q.first() ;
+    ouv=(q.value(0).toInt());
+
+    q.prepare("SELECT COUNT(id) FROM employee where poste='stagiaire' ");
+    q.exec();
+    q.first() ;
+    stag=(q.value(0).toInt());
+
+    q.prepare("SELECT COUNT(id) FROM employee where poste='instructeur' ");
+    q.exec();
+    q.first() ;
+    instruc=(q.value(0).toInt());
+    q.prepare("SELECT COUNT(id) FROM employee where poste='employe' ");
+    q.exec();
+    q.first() ;
+    emp_bur=(q.value(0).toInt());
+
+
+    q.prepare("SELECT COUNT(id) FROM employee ");
+    q.exec();
+    q.first() ;
+    total=(q.value(0).toInt());
+
+    ouv=((double)ouv/(double)total)*100;
+    instruc=((double)instruc/(double)total)*100;
+    stag=((double)stag/(double)total)*100;
+    emp_bur=((double)emp_bur/(double)total)*100;
+
+
+    ouvrier= QString::number(ouv);
+    stagiaire= QString::number(stag);
+    instructor= QString::number(instruc);
+    emp_bureau=QString::number(emp_bur);
+    QPieSeries *series;
+    series= new  QPieSeries();
+    series->append("Ouvriers"+ouvrier+"%",ouv);
+    series->append("instructeurs"+instructor+"%",instruc);
+    series->append("employés de bureau"+emp_bureau+"%",emp_bur);
+    series->append(" stagiaires"+stagiaire+"%",stag);
+    QPieSlice *slice0 = series->slices().at(0);
+      slice0->setLabelVisible();
+
+      QPieSlice *slice1 = series->slices().at(1);
+         slice1->setExploded();
+         slice1->setLabelVisible();
+         slice1->setPen(QPen(Qt::green, 3));
+         slice1->setBrush(Qt::darkYellow);
+
+         QPieSlice *slice2 = series->slices().at(2);
+            slice2->setExploded();
+            slice2->setLabelVisible();
+
+         QPieSlice *slice3 = series->slices().at(3);
+            slice3->setExploded();
+            slice3->setLabelVisible();
+
+
+          QChart *chart = new QChart();
+          chart->addSeries(series);
+          chart->setTitle("Statistique des types de métiers ");
+          chart->legend()->show();
+          QChartView *chartView = new QChartView(chart);
+          chartView->setRenderHint(QPainter::Antialiasing);
+          ui->verticalLayout->addWidget(chartView);
+     show();
+
+     ui->verticalLayout->removeWidget(chartView);
+
+
+}
+
+
+
+void gestionpersonnel::on_mail_send_edit_clicked()
+    {
+
+    Smtp* smtp;
+    const QString mailto=ui->adresse->text();
+
+       smtp = new Smtp("tennisclubracqueteers@gmail.com", "racqueteers.smartclub", "smtp.gmail.com");
+       //connect(smtp, SIGNAL(clicked()), this, SLOT(on_Mail_clicked()));
+       //std::cout<<mailto;
+
+       smtp->sendMail("Racqueteers Tennis Club ", mailto ,ui->email_object_edit->text(),ui->contenu->toPlainText());
+
+
+
+}
+
+void gestionpersonnel::on_google_search_button_clicked()
+{
+searchEdit.show();
+}
+
+void gestionpersonnel::on_retour_personnel_clicked()
+{
+    hide();
+    Rp = new MainWindow(this);
+    Rp->show();
+}

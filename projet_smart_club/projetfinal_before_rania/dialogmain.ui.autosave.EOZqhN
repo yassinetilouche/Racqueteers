@@ -1,0 +1,2526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialogmain</class>
+ <widget class="QDialog" name="Dialogmain">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>885</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/*Copyright (c) DevSec Studio. All rights reserved.
+
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED *AS IS*, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+/*-----QWidget-----*/
+QWidget
+{
+	
+	background-color: rgb(129, 129, 129);
+	color: #ffffff;
+	border-color: #051a39;
+
+}
+
+/*-----QLabel-----*/
+QLabel
+{
+	background-color: transparent;
+	color: rgb(235, 255, 201);
+	font: 12pt &quot;Segoe MDL2 Assets&quot;;
+}
+
+
+QLabel::disabled
+{
+	background-color: transparent;
+	color: #656565;
+
+}
+
+
+/*-----QMenuBar-----*/
+QMenuBar
+{
+	background-color: rgb(185, 179, 93);
+	color: rgb(0, 24, 0);
+	border-color: #051a39;
+}
+
+
+QMenuBar::disabled
+{
+	background-color: #404040;
+	color: #656565;
+	border-color: #051a39;
+
+}
+
+
+QMenuBar::item
+{
+    background-color: transparent;
+
+}
+
+
+QMenuBar::item:selected
+{
+    background-color: #607cff;
+    border: 1px solid #41cd52;
+
+}
+
+
+QMenuBar::item:pressed
+{
+    background-color: #4969ff;
+    border: 1px solid #000;
+    margin-bottom: -1px;
+    padding-bottom: 1px;
+
+}
+
+
+/*-----QMenu-----*/
+QMenu
+{
+    background-color: rgb(255, 252, 155);
+    border: 1px solid;
+    color: #ffffff;
+
+}
+
+
+QMenu::separator
+{
+    height: 1px;
+    background-color: #6d8eff;
+	color: rgb(0, 36, 0);
+    padding-left: 4px;
+    margin-left: 10px;
+    margin-right: 5px;
+
+}
+
+
+QMenu::item
+{
+	background-color: rgb(149, 149, 54);
+    
+	color: rgb(0, 0, 0);
+    min-width : 150px;
+    padding: 3px 20px 3px 20px;
+
+}
+
+
+QMenu::item:selected
+{
+    
+	background-color: rgb(197, 189, 76);
+    
+	color: rgb(0, 0, 0);
+
+}
+
+
+QMenu::item:disabled
+{
+    color: #262626;
+}
+
+
+/*-----QToolTip-----*/
+QToolTip
+{
+	border : 1px solid #000000;
+
+	color: #ffffff;
+	border-color: #051a39;
+
+}
+
+QToolBox
+{
+	border : 1px solid #000000;
+	background-color: rgb(194, 208, 168);
+	color: #ffffff;
+	border-color: #051a39;
+
+}
+
+/*-----QPushButton-----*/
+QPushButton
+{	
+	background-color: rgb(226, 206, 53);
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 10px;
+	border-color:  rgb(162, 125, 73);
+	padding: 5px;
+	font: 75 8pt &quot;System&quot;;
+	
+
+}
+
+
+QPushButton::disabled
+{
+	background-color: #404040;
+	color: rgb(255, 245, 92);
+	border-color: #051a39;
+
+}
+
+
+QPushButton::hover
+{	
+	background-color: rgb(152, 145, 70);
+	color: rgb(213, 255, 114);
+	
+border-style: solid;
+
+    border-bottom-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:1, stop:0 #100E19, stop:0.5 #100E19, stop:0.6 #C0DB50, stop:1 #C0DB50);
+
+	border-width: 2px;
+    border-radius: 1px;
+	color: #d3dae3;
+	padding: 2px;
+
+}
+
+
+QPushButton::pressed
+{
+	background-color: rgb(71, 104, 28);
+	color: #ffffff;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 3px;
+	border-color: #051a39;
+	padding: 5px;
+
+}
+
+
+/*-----QToolButton-----*/
+QToolButton
+{
+	background-color: #607cff;
+	color: #ffffff;
+	border-width: 1px;
+	border-radius: 3px;
+	border-color: #051a39;
+	padding: 3px;
+
+}
+
+
+QToolButton::disabled
+{
+	background-color: #404040;
+	color: #656565;
+	border-color: #051a39;
+
+}
+
+
+QToolButton::hover
+{
+	background-color: #8399ff;
+	color: #ffffff;
+	border-width: 1px;
+	border-radius: 3px;
+	border-color: #051a39;
+	padding: 3px;
+
+}
+
+
+QToolButton::pressed
+{
+	background-color: #4969ff;
+	color: #ffffff;
+	border-width: 1px;
+	border-radius: 3px;
+	border-color: #051a39;
+	padding: 3px;
+
+}
+
+
+/*-----QComboBox-----*/
+QComboBox
+{
+    
+	background-color: rgb(208, 223, 213);
+    border: 1px solid;
+    border-radius: 3px;
+    padding-left: 6px;
+   
+	color: rgb(0, 0, 0);
+    height: 20px;
+
+}
+
+
+QComboBox::disabled
+{
+	background-color: #404040;
+	color: #656565;
+	border-color: #051a39;
+
+}
+
+
+QComboBox:hover
+{
+    background-color: #8399ff;
+
+}
+
+
+QComboBox:on
+{
+    background-color: #4969ff;
+
+}
+
+
+QComboBox QAbstractItemView
+{
+    background-color: #383838;
+    color: #ffffff;
+    border: 1px solid black;
+    selection-background-color: #4969ff;
+    selection-color: #ffffff;
+    outline: 0;
+
+}
+
+
+QComboBox::drop-down
+{
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    border-left-width: 0px;
+    border-left-color: darkgray;
+    border-left-style: solid; 
+    border-top-right-radius: 3px; 
+    border-bottom-right-radius: 3px;
+
+}
+
+
+QComboBox::down-arrow
+{
+    image: url(://arrow-down.png);
+    width: 8px;
+    height: 8px;
+}
+
+
+/*-----QSpinBox &amp; QDoubleSpinBox &amp; QDateTimeEdit-----*/
+QSpinBox, 
+QDoubleSpinBox,
+QDateTimeEdit
+{
+	
+	background-color: rgb(194, 223, 206);
+	color: rgb(2, 2, 2);
+	border: 1px solid ,rgb(0, 0, 0);
+	border-radius: 3px;
+	padding : 2px;
+
+}
+
+
+QSpinBox::disabled, 
+QDoubleSpinBox::disabled,
+QDateTimeEdit::disabled
+{
+	background-color: #404040;
+	color: #656565;
+	border-color: #051a39;
+
+}
+
+
+QSpinBox:hover, 
+QDoubleSpinBox::hover,
+QDateTimeEdit::hover
+{
+    background-color: #626262;
+    border: 1px solid #607cff;
+    color:  #fff;
+    padding: 2px;
+}
+
+
+QSpinBox::up-button, QSpinBox::down-button,
+QDoubleSpinBox::up-button, QDoubleSpinBox::down-button,
+QDateTimeEdit::up-button, QDateTimeEdit::down-button
+{
+	
+	background-color: rgb(164, 170, 52);
+	color: rgb(255, 255, 255);
+	border-radius: 1px;
+}
+
+QSpinBox::disabled, 
+QDoubleSpinBox::disabled,
+QDateTimeEdit::disabled
+{
+	background-color: #404040;
+	color: #656565;
+	border-color: #051a39;
+
+}
+
+
+QSpinBox::up-button:hover, QSpinBox::down-button:hover,
+QDoubleSpinBox::up-button:hover, QDoubleSpinBox::down-button:hover,
+QDateTimeEdit::up-button:hover, QDateTimeEdit::down-button:hover
+{
+    background-color: #8399ff;
+    border: 1px solid #8399ff;
+	color: rgb(255, 255, 255);
+
+}
+
+
+QSpinBox::up-button:disabled, QSpinBox::down-button:disabled,
+QDoubleSpinBox::up-button:disabled, QDoubleSpinBox::down-button:disabled,
+QDateTimeEdit::up-button:disabled, QDateTimeEdit::down-button:disabled
+{
+	background-color: #404040;
+	color: #656565;
+	border-color: #051a39;
+	color: rgb(255, 255, 255);
+
+}
+
+
+QSpinBox::up-button:pressed, QSpinBox::down-button:pressed,
+QDoubleSpinBox::up-button:pressed, QDoubleSpinBox::down-button::pressed,
+QDateTimeEdit::up-button:pressed, QDateTimeEdit::down-button::pressed
+{
+    background-color: #4969ff;
+    border: 1px solid #4969ff;
+
+}
+
+
+QSpinBox::down-arrow,
+QDoubleSpinBox::down-arrow,
+QDateTimeEdit::down-arrow
+{
+  	
+    width: 7px;
+
+}
+
+
+QSpinBox::up-arrow,
+QDoubleSpinBox::up-arrow,
+QDateTimeEdit::up-arrow
+{
+    image: url(://arrow-up.png);
+    width: 7px;
+
+}
+
+
+/*-----QLineEdit-----*/
+QLineEdit
+{
+	background-color: rgb(180, 193, 182);
+	color: #ffffff;
+	border-width: 1px;
+	border-radius: 3px;
+	border-color: #051a39;
+	padding: 2px;
+
+}
+
+
+QLineEdit::disabled
+{
+	background-color: #404040;
+	color: #656565;
+	border-width: 1px;
+	border-radius: 3px;
+	border-color: #051a39;
+	padding: 2px;
+
+}
+
+
+/*-----QTextEdit-----*/
+QTextEdit
+{
+	background-color: #ffffff;
+	color: #010201;
+	border-color: #051a39;
+
+}
+
+
+QTextEdit::disabled
+{
+	background-color: #404040;
+	color: #656565;
+	border-color: #051a39;
+
+}
+
+
+/*-----QGroupBox-----*/
+QGroupBox 
+{
+    border: 1px solid;
+  
+	background-color: rgb(58, 117, 86);
+    margin-top: 22px;
+
+}
+
+
+QGroupBox::title  
+{
+    
+	background-color: rgb(213, 213, 88);
+    color: #ffffff;
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    padding: 5px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+
+}
+
+
+QGroupBox::title::disabled
+{
+	background-color: #404040;
+	color: #656565;
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    padding: 5px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+
+}
+
+
+/*-----QCheckBox-----*/
+QCheckBox::indicator
+{
+    color: #b1b1b1;
+    background-color: #323232;
+    border: 1px solid #b1b1b1;
+    width: 12px;
+    height: 12px;
+
+}
+
+
+QCheckBox::indicator:checked
+{
+    image:url(://checkbox.png);
+    border: 1px solid #607cff;
+}
+
+
+QCheckBox::indicator:unchecked:hover
+{
+    border: 1px solid #607cff;
+
+}
+
+
+QCheckBox::disabled
+{
+	color: #656565;
+
+}
+
+
+QCheckBox::indicator:disabled
+{
+	background-color: #656565;
+	color: #656565;
+    border: 1px solid #656565;
+
+}
+
+
+/*-----QRadioButton-----*/
+QRadioButton::indicator::unchecked
+{ 
+	border: 2px inset gray; 
+	border-radius: 5px; 
+	background-color:  #fff;
+	width: 9px; 
+	height: 9px; 
+
+}
+
+
+QRadioButton::indicator::unchecked:hover
+{ 
+	border: 2px solid #607cff; 
+	border-radius: 5px; 
+	background-color:  #fff;
+	width: 9px; 
+	height: 9px; 
+
+}
+
+
+QRadioButton::indicator::checked
+{ 
+	border: 2px inset darkgray; 
+	border-radius: 5px; 
+	background-color: #4969ff; 
+	width: 9px; 
+	height: 9px; 
+
+}
+
+
+QRadioButton::disabled
+{
+	color: #656565;
+
+}
+
+
+QRadioButton::indicator:disabled
+{
+	background-color: #656565;
+	color: #656565;
+    border: 2px solid #656565;
+
+}
+
+
+/*-----QTableView &amp; QTableWidget-----*/
+QTableView
+{
+	background-color: rgb(255, 255, 255);
+    border: transparent;
+	color: rgb(0, 0, 0);
+    gridline-color: rgb(41, 83, 61);
+border-color: rgb(255, 255, 255);
+}
+
+
+QTableView::disabled
+{
+    background-color: #242526;
+    border: 1px solid #32414B;
+    color: #656565;
+    gridline-color: #656565;
+    outline : 0;
+
+}
+
+
+QTableView::item:hover 
+{
+    
+	
+	background-color: rgb(156, 166, 68);
+    color: #f0f0f0;
+
+}
+
+
+QTableView::item:selected 
+{
+    background-color: #1a1b1c;
+    border: 2px solid #4969ff;
+    color: #F0F0F0;
+
+}
+
+
+QTableView::item:selected:disabled
+{
+    background-color: #1a1b1c;
+    border: 2px solid #525251;
+    color: #656565;
+
+}
+
+
+QTableCornerButton::section
+{
+    background-color: #505050;
+    color: #fff;
+
+}
+
+
+QHeaderView::section
+{
+    background-color: #525251;
+    color: #fff;
+    text-align: left;
+	padding: 4px;
+	
+}
+
+
+QHeaderView::section:disabled
+{
+    background-color: #525251;
+    color: #656565;
+
+}
+
+
+QHeaderView::section:checked
+{
+    color: #fff;
+    background-color: #4969ff;
+
+}
+
+
+QHeaderView::section:checked:disabled
+{
+    color: #656565;
+    background-color: #525251;
+
+}
+
+
+QHeaderView::section::vertical::first,
+QHeaderView::section::vertical::only-one
+{
+    border-top: 1px solid #353635;
+
+}
+
+
+QHeaderView::section::vertical
+{
+    border-top: 1px solid #353635;
+
+}
+
+
+QHeaderView::section::horizontal::first,
+QHeaderView::section::horizontal::only-one
+{
+    border-left: 1px solid #353635;
+
+}
+
+
+QHeaderView::section::horizontal
+{
+    border-left: 1px solid #353635;
+
+}
+
+
+/*-----QTabWidget-----*/
+QTabBar::tab
+{
+	background-color: rgb(255, 255, 135);
+	color: rgb(255, 170, 0);
+	border-style: solid;
+	border-width: 1px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	border-color: #051a39;
+	padding: 5px;
+
+}
+
+
+QTabBar::tab:disabled
+{
+	background-color: #656565;
+	color: #656565;
+
+}
+
+QTabBar::tab:selected, QTabBar::tab:last:selected, QTabBar::tab:hover {
+	
+	background-color: rgb(145, 145, 0);
+	color: rgb(255, 255, 255);
+  	border-bottom-color: #04b97f;
+	border-bottom-width: 2px;
+}
+
+QTabWidget::pane 
+{
+	background-color: #transparent;
+	color: rgb(248, 255, 97);
+    border: 1px solid;
+    border-color: transparent;
+}
+
+
+
+QTabBar::tab:selected
+{
+   
+	background-color: rgb(206, 192, 81);
+	color: #ffffff;
+	border-style: solid;
+	border-width: 1px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	border-color: #051a39;
+	padding: 5px;
+
+}
+
+
+QTabBar::tab:selected:disabled
+{
+	background-color: #404040;
+	color: #656565;
+
+}
+
+
+QTabBar::tab:!selected 
+{
+    background-color: #262626;
+
+}
+
+
+QTabBar::tab:!selected:hover 
+{
+    background-color: #8399ff;
+
+}
+
+
+QTabBar::tab:top:!selected 
+{
+    margin-top: 3px;
+
+}
+
+
+QTabBar::tab:bottom:!selected 
+{
+    margin-bottom: 3px;
+
+}
+
+
+QTabBar::tab:top, QTabBar::tab:bottom 
+{
+    min-width: 8ex;
+    margin-right: -1px;
+    padding: 5px 10px 5px 10px;
+
+}
+
+
+QTabBar::tab:top:selected 
+{
+    border-bottom-color: none;
+
+}
+
+
+QTabBar::tab:bottom:selected 
+{
+    border-top-color: none;
+
+}
+
+
+QTabBar::tab:top:last, QTabBar::tab:bottom:last,
+QTabBar::tab:top:only-one, QTabBar::tab:bottom:only-one 
+{
+    margin-right: 0;
+
+}
+
+
+QTabBar::tab:left:!selected 
+{
+    margin-right: 3px;
+
+}
+
+
+QTabBar::tab:right:!selected
+{
+    margin-left: 3px;
+
+}
+
+
+QTabBar::tab:left, QTabBar::tab:right 
+{
+    min-height: 8ex;
+    margin-bottom: -1px;
+    padding: 10px 5px 10px 5px;
+
+}
+
+
+QTabBar::tab:left:selected 
+{
+    border-left-color: none;
+
+}
+
+
+QTabBar::tab:right:selected 
+{
+    border-right-color: none;
+
+}
+
+
+QTabBar::tab:left:last, QTabBar::tab:right:last,
+QTabBar::tab:left:only-one, QTabBar::tab:right:only-one 
+{
+    margin-bottom: 0;
+
+}
+
+
+/*-----QSlider-----*/
+QSlider::groove:horizontal 
+{
+	background-color: transparent;
+	height: 5px;
+
+}
+
+
+QSlider::sub-page:horizontal 
+{
+	background-color: #607cff;
+
+}
+
+
+QSlider::add-page:horizontal 
+{
+	background-color: #666765;
+
+}
+
+
+QSlider::handle:horizontal 
+{
+	background-color: #607cff;
+	width: 14px;
+	margin-top: -6px;
+	margin-bottom: -6px;
+	border-radius: 3px;
+
+}
+
+
+QSlider::handle:horizontal:hover 
+{
+	background-color: #607cff;
+	border-radius: 3px;
+
+}
+
+
+QSlider::sub-page:horizontal:disabled 
+{
+	background-color: #bbb;
+	border-color: #999;
+
+}
+
+
+QSlider::add-page:horizontal:disabled 
+{
+	background-color: #eee;
+	border-color: #999;
+
+}
+
+
+QSlider::handle:horizontal:disabled 
+{
+	background-color: #eee;
+	border: 1px solid #aaa;
+	border-radius: 3px;
+
+}
+
+
+QSlider::groove:vertical 
+{
+	background-color: transparent;
+	width: 5px;
+
+}
+
+
+QSlider::sub-page:vertical 
+{
+	background-color: #607cff;
+
+}
+
+
+QSlider::add-page:vertical 
+{
+	background-color: #666765;
+
+}
+
+
+QSlider::handle:vertical 
+{
+	background-color: #607cff;
+	height: 14px;
+	margin-left: -6px;
+	margin-right: -6px;
+	border-radius: 3px;
+
+}
+
+
+QSlider::handle:vertical:hover 
+{
+	background-color: #607cff;
+	border-radius: 3px;
+
+}
+
+
+QSlider::sub-page:vertical:disabled 
+{
+	background-color: #bbb;
+	border-color: #999;
+
+}
+
+
+QSlider::add-page:vertical:disabled 
+{
+	background-color: #eee;
+	border-color: #999;
+
+}
+
+
+QSlider::handle:vertical:disabled 
+{
+	background-color: #eee;
+	border: 1px solid #aaa;
+	border-radius: 3px;
+
+}
+
+
+/*-----QDial-----*/
+QDial
+{
+	background-color: #607cff;
+
+}
+
+
+QDial::disabled
+{
+	background-color: #404040;
+
+}
+
+
+/*-----QScrollBar-----*/
+QScrollBar:horizontal
+{
+    border: 1px solid , rgb(170, 170, 127);
+    
+	background-color: rgb(171, 141, 72);
+    height: 13px;
+    margin: 0px 16px 0 16px;
+
+}
+
+
+QScrollBar::handle:horizontal
+{
+    background: rgb(223, 209, 46);
+    min-height: 20px;
+
+}
+
+
+QScrollBar::add-line:horizontal
+{
+    border: 1px solid #1b1b19;
+   
+	background-color: rgb(214, 214, 116);
+    width: 14px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+
+}
+
+
+QScrollBar::sub-line:horizontal
+{
+    border: 1px solid #1b1b19;
+    background-color: rgb(214, 214, 116);
+    width: 14px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+
+}
+
+
+QScrollBar::right-arrow:horizontal
+{
+    image: url(://arrow-right.png);
+    width: 6px;
+    height: 6px;
+
+}
+
+
+QScrollBar::left-arrow:horizontal
+{
+    image: url(://arrow-left.png);
+    width: 6px;
+    height: 6px;
+
+}
+
+
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
+{
+    background: none;
+
+}
+
+
+QScrollBar:vertical
+{
+    background-color: #3d3d3d;
+    width: 13px;
+    margin: 16px 0 16px 0;
+    border: 1px solid #222222;
+
+}
+
+
+QScrollBar::handle:vertical
+{
+    background-color: #607cff;
+    min-height: 20px;
+
+}
+
+
+QScrollBar::add-line:vertical
+{
+    border: 1px solid #1b1b19;
+    background-color: #607cff;
+    height: 14px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+
+}
+
+
+QScrollBar::sub-line:vertical
+{
+    border: 1px solid #1b1b19;
+    background-color: #607cff;
+    height: 14px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+
+}
+
+
+QScrollBar::up-arrow:vertical
+{
+    image: url(://arrow-up.png);
+    width: 6px;
+    height: 6px;
+
+}
+
+
+QScrollBar::down-arrow:vertical
+{
+    image: url(://arrow-down.png);
+    width: 6px;
+    height: 6px;
+
+}
+
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
+{
+    background: none;
+
+}
+
+
+/*-----QProgressBar-----*/
+QProgressBar
+{
+	
+	background-color: rgb(152, 101, 0);
+	color: #ffffff;
+	border: 1px solid #607cff;
+	border-radius: 3px;
+	text-align: center;
+
+}
+
+
+QProgressBar::chunk {
+	
+	background-color: rgb(161, 200, 117);
+	
+	color: rgb(184, 156, 101);
+
+}
+
+
+QProgressBar::chunk:disabled {
+	
+	background-color: rgb(221, 223, 93);
+	border: 1px solid #aaa;
+	color: rgb(170, 141, 68);
+}
+
+
+/*-----QStatusBar-----*/
+QStatusBar
+{
+	
+	background-color: rgb(149, 136, 33);
+	color: #ffffff;
+	border-color: #051a39;
+
+}</string>
+  </property>
+  <widget class="QStackedWidget" name="stackedWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>10</y>
+     <width>841</width>
+     <height>571</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="page">
+    <widget class="QStackedWidget" name="stackedWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>821</width>
+       <height>441</height>
+      </rect>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="page_3">
+      <widget class="QPushButton" name="nxt_btn">
+       <property name="geometry">
+        <rect>
+         <x>720</x>
+         <y>410</y>
+         <width>101</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Next Table</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="table_title">
+       <property name="geometry">
+        <rect>
+         <x>370</x>
+         <y>10</y>
+         <width>91</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>SEANCES</string>
+       </property>
+      </widget>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>40</y>
+         <width>811</width>
+         <height>361</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <widget class="QWidget" name="tab">
+        <attribute name="title">
+         <string>CREATE</string>
+        </attribute>
+        <widget class="QWidget" name="formLayoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>791</width>
+           <height>321</height>
+          </rect>
+         </property>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>ID SEANCE :</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit_id_seance"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>DATE SCEANCE : </string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDateEdit" name="dateEdit_seance"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>HEURE DEBUT :</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QTimeEdit" name="debut_seance"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>HEURE FIN : </string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QTimeEdit" name="fin_seance"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>LIEU :</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QComboBox" name="lineEdit_lieu">
+            <item>
+             <property name="text">
+              <string>SOUSSE</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>ARIANA</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>TUNIS</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>PRIX : </string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="lineEdit_prix"/>
+          </item>
+          <item row="6" column="1">
+           <widget class="QPushButton" name="add_sc_btn">
+            <property name="text">
+             <string>ADD</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_2">
+        <attribute name="title">
+         <string>MANAGE</string>
+        </attribute>
+        <widget class="QTableView" name="tabSeances">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>30</y>
+           <width>801</width>
+           <height>201</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="edit_sc">
+         <property name="geometry">
+          <rect>
+           <x>564</x>
+           <y>300</y>
+           <width>81</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>EDIT</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="delete_sc">
+         <property name="geometry">
+          <rect>
+           <x>674</x>
+           <y>300</y>
+           <width>81</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>DELETE</string>
+         </property>
+        </widget>
+        <widget class="QWidget" name="horizontalLayoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>250</y>
+           <width>791</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QLineEdit" name="id_edit"/>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="date_edit"/>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="db_edit"/>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="fn_edit"/>
+          </item>
+          <item>
+           <widget class="QComboBox" name="lieu_edit">
+            <item>
+             <property name="text">
+              <string>SOUSSE</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>ARIANA</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>TUNIS</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="prix_edit"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QPushButton" name="id_desc">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>30</y>
+           <width>111</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>        v</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="id_asc">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>    ^</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="date_asc">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>^</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="date_desc">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>v</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="heuredb_asc">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>^</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="heuredb_desc">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>v</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="heurefn_asc">
+         <property name="geometry">
+          <rect>
+           <x>440</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>^</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="heurefn_desc">
+         <property name="geometry">
+          <rect>
+           <x>440</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>v</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="lieu_asc">
+         <property name="geometry">
+          <rect>
+           <x>560</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>^</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="lieu_desc">
+         <property name="geometry">
+          <rect>
+           <x>560</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>v</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="prix_asc">
+         <property name="geometry">
+          <rect>
+           <x>690</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>^</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="prix_desc">
+         <property name="geometry">
+          <rect>
+           <x>690</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>v</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="search">
+         <property name="geometry">
+          <rect>
+           <x>560</x>
+           <y>0</y>
+           <width>221</width>
+           <height>31</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton">
+         <property name="geometry">
+          <rect>
+           <x>420</x>
+           <y>0</y>
+           <width>121</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>STATS</string>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QPushButton" name="prv_btn">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>410</y>
+         <width>111</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Previous Table</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page_4">
+      <widget class="QLabel" name="label_7">
+       <property name="geometry">
+        <rect>
+         <x>370</x>
+         <y>10</y>
+         <width>71</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>COURS</string>
+       </property>
+      </widget>
+      <widget class="QTabWidget" name="tabWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>-10</x>
+         <y>20</y>
+         <width>831</width>
+         <height>431</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="tab_3">
+        <attribute name="title">
+         <string>CREATE</string>
+        </attribute>
+        <widget class="QWidget" name="formLayoutWidget_2">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>50</y>
+           <width>481</width>
+           <height>151</height>
+          </rect>
+         </property>
+         <layout class="QFormLayout" name="formLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>COUR ID :</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="cours_id"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="cours_titre"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>NBR OBJECTIVES: </string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="cours_nbr_obj"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>NBR PARTICIPANT:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="cours_nbr_prtc"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>NBR SEANCES REQ :</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="cours_nbr_sc"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>TITRE : </string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QPushButton" name="add_cr_btn">
+         <property name="geometry">
+          <rect>
+           <x>330</x>
+           <y>250</y>
+           <width>121</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>ADD</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="tab_4">
+        <attribute name="title">
+         <string>MANAGE</string>
+        </attribute>
+        <widget class="QTableView" name="tabCours">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>30</y>
+           <width>791</width>
+           <height>231</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="edit_cours">
+         <property name="geometry">
+          <rect>
+           <x>590</x>
+           <y>330</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>EDIT</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="delete_cours">
+         <property name="geometry">
+          <rect>
+           <x>670</x>
+           <y>330</y>
+           <width>75</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>DELETE</string>
+         </property>
+        </widget>
+        <widget class="QWidget" name="horizontalLayoutWidget_2">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>260</y>
+           <width>711</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <item>
+           <widget class="QLineEdit" name="cours_id_edit"/>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="cours_titre_edit"/>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="cours_nbr_obj_edit"/>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="cours_nbr_part_edit"/>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="cours_nbr_sc_req_edit"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QPushButton" name="titre_asc">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>^</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="nsea_asc">
+         <property name="geometry">
+          <rect>
+           <x>450</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>^</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="npar_asc">
+         <property name="geometry">
+          <rect>
+           <x>360</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>^</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="titre_desc">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>v</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="nsea_desc">
+         <property name="geometry">
+          <rect>
+           <x>450</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>v</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="nobj_asc">
+         <property name="geometry">
+          <rect>
+           <x>260</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>^</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="npar_desc">
+         <property name="geometry">
+          <rect>
+           <x>360</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>v</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="id_desc_2">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>30</y>
+           <width>111</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>        v</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="id_asc_2">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>    ^</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="nobj_desc">
+         <property name="geometry">
+          <rect>
+           <x>260</x>
+           <y>30</y>
+           <width>101</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">
+QPushButton {
+color: grey;
+font-weight: none;
+background-color: none;
+border-width: none;
+border-color: none;
+border-style: none;
+border-radius: none;
+padding: none;
+
+
+}
+QPushButton:hover { background-color: none;
+color:black;
+text-decoration: none; }</string>
+         </property>
+         <property name="text">
+          <string>v</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit">
+         <property name="geometry">
+          <rect>
+           <x>562</x>
+           <y>10</y>
+           <width>231</width>
+           <height>20</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="QR">
+         <property name="geometry">
+          <rect>
+           <x>490</x>
+           <y>330</y>
+           <width>93</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>GET QR CODE</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="QR_label">
+         <property name="geometry">
+          <rect>
+           <x>370</x>
+           <y>310</y>
+           <width>81</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QCheckBox" name="checkBox">
+       <property name="geometry">
+        <rect>
+         <x>680</x>
+         <y>0</y>
+         <width>83</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>dark mode</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QLabel" name="module_title">
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>20</y>
+       <width>201</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>AMRI SIDKI MODULE</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="retour_seance">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>93</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Retour</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="google_search_button">
+     <property name="geometry">
+      <rect>
+       <x>650</x>
+       <y>520</y>
+       <width>201</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>System</family>
+       <pointsize>8</pointsize>
+       <weight>9</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Search Google </string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>520</y>
+       <width>93</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Excl</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_2">
+    <widget class="QPushButton" name="prv_md_btn">
+     <property name="geometry">
+      <rect>
+       <x>540</x>
+       <y>490</y>
+       <width>91</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Previous Module</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
